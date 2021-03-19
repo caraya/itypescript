@@ -1,5 +1,3 @@
-# HELP WANTED: I'm very sorry that I cannot manage this repository anymore. See [issue #23](https://github.com/nearbydelta/itypescript/issues/23) for the discussion about ownership transfer.
-
 # ITypescript
 
 ITypescript is an [`npm` package](https://www.npmjs.com/) that implements a
@@ -28,16 +26,16 @@ We converted the code into typescript, and modified tiny fraction of it.
 Following examples are translation of [IJavascript](http://n-riesco.github.io/ijavascript)'s
 examples, from javascript to typescript.
 
-- [Hello, World!](https://github.com/nearbydelta/itypescript/tree/master/doc/hello.ipynb)
+- [Hello, World!](https://github.com/winnekes/itypescript/tree/master/doc/hello.ipynb)
 - [Graphical
   output](https://github.com/nearbydelta/itypescript/tree/master/doc/graphics.ipynb) for
   `HTML`, `SVG`, `PNG`, ...
 - [Asynchronous
-  output](https://github.com/nearbydelta/itypescript/tree/master/doc/async.ipynb)
-- [Autocompletion](https://github.com/nearbydelta/itypescript/tree/master/doc/Completion.Inspection.ipynb):
+  output](https://github.com/winnekes/itypescript/tree/master/doc/async.ipynb)
+- [Autocompletion](https://github.com/winnekes/itypescript/tree/master/doc/Completion.Inspection.ipynb):
   press `TAB` to complete keywords and object properties
 - [Object
-  inspection](https://github.com/nearbydelta/itypescript/tree/master/doc/Completion.Inspection.ipynb): press
+  inspection](https://github.com/winnekes/itypescript/tree/master/doc/Completion.Inspection.ipynb): press
   `Shift-TAB` to inspect an object and show its content or, if available, its
   documentation
 
@@ -71,12 +69,12 @@ Or you can install it locally:
 its --install=local
 ```
 
-For further usage, check [usage.md](https://github.com/nearbydelta/itypescript/blob/master/doc/usage.md)
+For further usage, check [usage.md](https://github.com/winnekes/itypescript/blob/master/doc/usage.md)
 
 # Contributions
 
 First of all, thank you for taking the time to contribute. Please, read
-[CONTRIBUTING](http://github.com/nearbydelta/itypescript/blob/master/CONTRIBUTING.md) and use
-the [issue tracker](http://github.com/nearbydelta/itypescript/issues) for any
+[CONTRIBUTING](http://github.com/winnekes/itypescript/blob/master/CONTRIBUTING.md) and use
+the [issue tracker](http://github.com/winnekes/itypescript/issues) for any
 contributions: support requests, bug reports, enhancement requests, pull
 requests, submission of tutorials...
