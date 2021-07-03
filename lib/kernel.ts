@@ -86,7 +86,7 @@ Options:
                 debugging(msgs.join(" "));
             };
         } catch (err) {
-            Logger.onVerbose();
+            Logger.onVerbose(); 
         }
     }
 
