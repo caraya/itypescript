@@ -42,7 +42,7 @@ import Kernel = require("jp-kernel");
 import diff = require("diff");
 import {sys} from "typescript";
 
-let $TScode = fs.readFileSync(path.join(__dirname, "startup.ts")).toString("UTF-8");
+const $TScode = fs.readFileSync(path.join(__dirname, "startup.ts")).toString("utf-8");
 
 /**
  * A logger class for error/debug messages
@@ -64,7 +64,7 @@ Options:
      * Logging function (Do nothing by default).
      */
     static log: (...msgs: any[]) => void = () => {
-    }
+    };
 
     /**
      * Set logger function as verbose level.
@@ -81,7 +81,7 @@ Options:
      */
     static onProcessDebug() {
         try {
-            let debugging = require("debug")("KERNEL:");
+            const debugging = require("debug")("KERNEL:");
             Logger.log = (...msgs: any[]) => {
                 debugging(msgs.join(" "));
             };
@@ -150,22 +150,22 @@ interface KernelConfig {
  */
 class Configuration {
     // Indicate whether this kernel is under debug
-    private _onDebug: boolean = false;
+    private _onDebug = false;
 
     // Indicate whether ESModuleInterop option should be turned off
-    private _offESInterop: boolean = false;
+    private _offESInterop = false;
 
     // Path of working directory
     private _workingDir: string = process.cwd();
 
     // Indicate whether I should hide undefined result
-    private hideUndefined: boolean = false;
+    private hideUndefined = false;
 
     // Indicate whether I should hide execution result
-    private hideExecutionResult: boolean = false;
+    private hideExecutionResult = false;
 
     // The version of protocol
-    private protocolVer: string = "5.1";
+    private protocolVer = "5.1";
 
     // Basic startup script (Enable $TS usage)
     private onStartup = function () {
@@ -173,7 +173,7 @@ class Configuration {
     };
 
     // Is kernel connected?
-    private isConnSet: boolean = false;
+    private isConnSet = false;
 
     // The object handles Jupyter connection
     private conn: Object = {};
@@ -185,14 +185,14 @@ class Configuration {
     private _startupScript: string;
 
     static parseOptions(lines: string[]) {
-        let result: {kernel: any, compiler: ts.CompilerOptions} = {
+        const result: {kernel: any; compiler: ts.CompilerOptions} = {
             kernel: {},
             compiler: {},
         };
 
-        for (let line of lines) {
+        for (const line of lines) {
             let [keyword, ...args] = line.slice(1).split(" ");
-            let val = args.join(" ");
+            const val = args.join(" ");
 
             keyword = keyword.trim();
 
@@ -226,14 +226,14 @@ class Configuration {
             moduleResolution: ts.ModuleResolutionKind.NodeJs,
             esModuleInterop: !this._offESInterop
         };
-        let configFile = ts.findConfigFile(this._workingDir, ts.sys.fileExists);
+        const configFile = ts.findConfigFile(this._workingDir, ts.sys.fileExists);
         let tsConfigWarnings: string[] = [];
 
         if (!configFile) {
             tsConfigWarnings.push("<b>Configuration is not found!</b> Default configuration will be used: <pre>" +
                 JSON.stringify(options) + "</pre>");
         } else {
-            let parseConfigHost: ts.ParseConfigFileHost = {
+            const parseConfigHost: ts.ParseConfigFileHost = {
                 getCurrentDirectory: () => this._workingDir,
                 readDirectory: ts.sys.readDirectory,
                 readFile: ts.sys.readFile,
@@ -244,7 +244,7 @@ class Configuration {
                         ts.flattenDiagnosticMessageText(diagnostic.messageText, ts.sys.newLine) + "</pre>");
                 }
             };
-            let parsedConfig = ts.getParsedCommandLineOfConfigFile(configFile, {}, parseConfigHost);
+            const parsedConfig = ts.getParsedCommandLineOfConfigFile(configFile, {}, parseConfigHost);
             if (parsedConfig) {
                 options = parsedConfig.options;
             }
@@ -254,7 +254,7 @@ class Configuration {
         let workFileVersion = 0;
         let prevLines = 0;
         let prevJSCode = "";
-        let copiedOpts = Object.assign({}, options);
+        const copiedOpts = Object.assign({}, options);
         console.log(options);
 
         const FILENAME = "cell.ts";
@@ -288,23 +288,23 @@ class Configuration {
         const services = ts.createLanguageService(langServHost, ts.createDocumentRegistry());
 
         const execTranspile = (fileName: string) => {
-            let output = services.getEmitOutput(fileName);
-            let allDiagnostics = services
+            const output = services.getEmitOutput(fileName);
+            const allDiagnostics = services
                 .getCompilerOptionsDiagnostics()
                 .concat(services.getSyntacticDiagnostics(fileName))
                 .concat(services.getSemanticDiagnostics(fileName));
 
             if (output.emitSkipped || allDiagnostics.length > 0) {
                 throw Error(allDiagnostics.map(diagnostic => {
-                    let code = `TS${diagnostic.code}`;
-                    let message = ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n");
+                    const code = `TS${diagnostic.code}`;
+                    const message = ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n");
                     if (diagnostic.file) {
                         let {line, character} = diagnostic.file.getLineAndCharacterOfPosition(
                             diagnostic.start!
                         );
                         if (diagnostic.file.fileName === FILENAME) {
-                            let theErrorLine = snapshot[line];
-                            let errorPos = "_".repeat(character) + "^";
+                            const theErrorLine = snapshot[line];
+                            const errorPos = "_".repeat(character) + "^";
                             line -= prevLines - 1;
                             if (line < 0) {
                                 return `Conflict with a committed line: \n${theErrorLine}\n${errorPos}\n${code}: ${message}`;
@@ -323,7 +323,7 @@ class Configuration {
             return output.outputFiles[0].text;
         };
 
-        let transpiler = (rawCode: string) => {
+        const transpiler = (rawCode: string) => {
             let code = rawCode.split("\n");
             let overrideOptions: any = null;
             if (code[0].startsWith("%")) {
@@ -336,10 +336,10 @@ class Configuration {
                     code = ["$$.async();"].concat(code);
                 }
 
-                for (let key of Object.getOwnPropertyNames(overrideOptions.compiler)) {
-                    let isPermanent = key.endsWith("!");
-                    let keyname = key.replace(/!$/, "");
-                    let parsed = JSON.parse(overrideOptions.compiler[key]);
+                for (const key of Object.getOwnPropertyNames(overrideOptions.compiler)) {
+                    const isPermanent = key.endsWith("!");
+                    const keyname = key.replace(/!$/, "");
+                    const parsed = JSON.parse(overrideOptions.compiler[key]);
 
                     copiedOpts[keyname] = parsed;
 
@@ -362,8 +362,8 @@ class Configuration {
             }
 
             try {
-                let generated = execTranspile(FILENAME);
-                let codeChange = diff.diffLines(prevJSCode, generated, {newlineIsToken: true});
+                const generated = execTranspile(FILENAME);
+                const codeChange = diff.diffLines(prevJSCode, generated, {newlineIsToken: true});
                 let codeslice = codeChange.filter(s => s.added).map(s => s.value).join("\n");
                 prevLines = snapshot.length;
                 prevJSCode = generated;
@@ -371,7 +371,7 @@ class Configuration {
 
                 if (tsConfigWarnings && workFileVersion > 1) {
                     // Prepend warnings before code
-                    let warnings = tsConfigWarnings.map(str =>
+                    const warnings = tsConfigWarnings.map(str =>
                         "$$.html(\"<div style='background:#ffecb3;padding:1em;border-left:2px solid #ff6d00'>" +
                         str.replace(/"/g, "\\\"") + "</div>\");\n").join("\n");
                     codeslice = warnings + codeslice;
@@ -380,8 +380,8 @@ class Configuration {
 
                 if (overrideOptions) {
                     // Restore overrided compiler options
-                    for (let key of Object.getOwnPropertyNames(overrideOptions.compiler)) {
-                        let keyname = key.replace(/!$/, "");
+                    for (const key of Object.getOwnPropertyNames(overrideOptions.compiler)) {
+                        const keyname = key.replace(/!$/, "");
                         copiedOpts[keyname] = options[keyname];
                     }
                 }
@@ -394,7 +394,7 @@ class Configuration {
         };
 
         // Object for return (set by default)
-        let baseObj: KernelConfig = {
+        const baseObj: KernelConfig = {
             cwd: this._workingDir,
             hideUndefined: this.hideUndefined,
             hideExecutionResult: this.hideExecutionResult,
@@ -464,14 +464,14 @@ class Configuration {
      */
     set protocolVersion(ver: string) {
         this.protocolVer = ver;
-        let majorVersion: number = parseInt(ver.split(".")[0]);
+        const majorVersion: number = parseInt(ver.split(".")[0]);
 
         if (majorVersion <= 4) {
-            let tsVer = ts.version.split(".")
+            const tsVer = ts.version.split(".")
                 .map(function (v) {
                     return parseInt(v, 10);
                 });
-            let protocolVersion = ver.split(".")
+            const protocolVersion = ver.split(".")
                 .map(function (v) {
                     return parseInt(v, 10);
                 });
@@ -481,7 +481,7 @@ class Configuration {
                 "protocol_version": protocolVersion,
             };
         } else {
-            let itsVersion = JSON.parse(
+            const itsVersion = JSON.parse(
                 fs.readFileSync(path.join(__dirname, "..", "package.json")).toString()
             ).version;
             this.response = {
@@ -496,7 +496,7 @@ class Configuration {
                 },
                 "banner": (
                     "ITypescript v" + itsVersion + "\n" +
-                    "https://github.com/nearbydelta/itypescript\n"
+                    "https://github.com/winnekes/itypescript\n"
                 ),
                 "help_links": [{
                     "text": "TypeScript Doc",
@@ -525,13 +525,13 @@ class Parser {
      */
     static parse() {
         // Generate a configuration builder
-        let configBuilder = new Configuration();
+        const configBuilder = new Configuration();
         // Load arguments
-        let argv = process.argv.slice(2);
+        const argv = process.argv.slice(2);
 
         // For each arguments, check and update configuration.
-        for (let arg of argv) {
-            let [name, ...values] = arg.slice(2).split("=");
+        for (const arg of argv) {
+            const [name, ...values] = arg.slice(2).split("=");
             switch (name) {
                 case "debug":
                     configBuilder.onDebug();
@@ -562,7 +562,7 @@ class Parser {
     }
 }
 
-/*** Below: Launch codes for Kernel ***/
+/** * Below: Launch codes for Kernel ***/
 
 // Check whether DEBUG is set in the environment
 if (process.env["DEBUG"]) {
@@ -570,10 +570,10 @@ if (process.env["DEBUG"]) {
 }
 
 // Parse configuration
-let config = Parser.parse();
+const config = Parser.parse();
 
 // Start kernel with parsed configuration
-let kernel = new Kernel(config);
+const kernel = new Kernel(config);
 
 // Interpret a SIGINT signal as a request to interrupt the kernel
 process.on("SIGINT", function () {

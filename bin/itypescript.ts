@@ -47,7 +47,7 @@ import path = require("path");
  */
 class Logger {
     // Usage string
-    private static usage: string = `Itypescript Notebook
+    private static usage = `Itypescript Notebook
 
 Usage:
   its <options>
@@ -82,7 +82,7 @@ Disclaimer:
      * Logging function (Do nothing by default).
      */
     static log: (...msgs: any[]) => void = () => {
-    }
+    };
 
     /**
      * Set logger function as verbose level.
@@ -99,7 +99,7 @@ Disclaimer:
      */
     static onProcessDebug() {
         try {
-            let debugging = require("debug")("ITS:");
+            const debugging = require("debug")("ITS:");
             Logger.log = function (...msgs: any[]) {
                 debugging(msgs.join(" "));
             };
@@ -236,7 +236,7 @@ class Arguments {
  * @return Major version number
  */
 function majorVersionOf(ver: string): number {
-    let major = parseInt(ver.split(".")[0]);
+    const major = parseInt(ver.split(".")[0]);
     if (isNaN(major)) {
         Logger.throwAndExit(false, true,
             "Error parsing version:",
@@ -270,14 +270,14 @@ class Main {
      */
     static prepare(callback?: () => void) {
         // Arguments specified in command line
-        let extraArgs: string[] = process.argv.slice(2);
+        const extraArgs: string[] = process.argv.slice(2);
 
-        for (let e of extraArgs) {
-            let [name, ...values] = e.slice(2).split("=");
+        for (const e of extraArgs) {
+            const [name, ...values] = e.slice(2).split("=");
 
             // arguments begin with 'ts' should be passed to Kernel
             if (name.lastIndexOf("ts", 0) === 0) {
-                let subname = name.slice(3);
+                const subname = name.slice(3);
                 if (subname === "debug") {
                     Logger.onVerbose();
                 } else if (subname === "protocol") {
@@ -321,7 +321,7 @@ class Main {
                         console.warn(`Warning: Flag "${ e }" skipped`);
                         break;
                     default:
-                        // Other arguments are arguments of frontend scripts.
+                    // Other arguments are arguments of frontend scripts.
                         Arguments.passToFrontend(e);
                 }
             }
@@ -338,7 +338,7 @@ class Main {
      * Set the number of Jupyter protocol used.
      */
     static setProtocol() {
-        let frontMajor = majorVersionOf(Main.frontendVersion!);
+        const frontMajor = majorVersionOf(Main.frontendVersion!);
         if (frontMajor < 3) {
             Main.protocolVersion = "4.1";
             Arguments.passToKernel("--protocol", Main.protocolVersion!);
@@ -407,7 +407,7 @@ class Main {
      * Make temporary directory to build kernel spec
      * @param maxAttempts Maximum attempts to make directory
      */
-    static makeTmpdir(maxAttempts: number = 10): string {
+    static makeTmpdir(maxAttempts = 10): string {
         let attempts = 0;
         let tmpdir: string | null = null;
 
@@ -434,32 +434,32 @@ class Main {
      * @param images Image files to be copied
      */
     static copyAsync(srcDir: string, dstDir: string,
-                     callback?: (...dstFiles: string[]) => void, ...images: string[]) {
-        let dstFiles: string[] = [];
-        let callStack: (() => void)[] = [];
+        callback?: (...dstFiles: string[]) => void, ...images: string[]) {
+        const dstFiles: string[] = [];
+        const callStack: (() => void)[] = [];
         if (callback) {
             callStack.push(function () {
                 callback(...dstFiles);
             });
         }
 
-        for (let img of images) {
-            let src = path.join(srcDir, img);
-            let dst = path.join(dstDir, img);
+        for (const img of images) {
+            const src = path.join(srcDir, img);
+            const dst = path.join(dstDir, img);
             dstFiles.push(dst);
 
             callStack.push(function () {
-                let readStream = fs.createReadStream(src);
-                let writeStream = fs.createWriteStream(dst);
+                const readStream = fs.createReadStream(src);
+                const writeStream = fs.createWriteStream(dst);
                 readStream.on("end", function () {
-                    let top = callStack.pop();
+                    const top = callStack.pop();
                     top!();
                 });
                 readStream.pipe(writeStream);
             });
         }
 
-        let top = callStack.pop();
+        const top = callStack.pop();
         top!();
     }
 
@@ -483,13 +483,13 @@ class Main {
         }
 
         // Create temporary directory to store kernel spec
-        let tmpdir = Main.makeTmpdir();
-        let specDir = path.join(tmpdir, "typescript");
+        const tmpdir = Main.makeTmpdir();
+        const specDir = path.join(tmpdir, "typescript");
         fs.mkdirSync(specDir);
 
         // Create kernel spec file
-        let specFile = path.join(specDir, "kernel.json");
-        let spec = {
+        const specFile = path.join(specDir, "kernel.json");
+        const spec = {
             argv: Arguments.kernel,
             display_name: `Typescript ${require("typescript").version.replace(/([0-9]+\.[0-9]+)\..*/g, "$1")}`,
             language: "typescript",
@@ -497,10 +497,10 @@ class Main {
         fs.writeFileSync(specFile, JSON.stringify(spec));
 
         // Copy logo files
-        let logoDir = path.join(Path.images);
+        const logoDir = path.join(Path.images);
         Main.copyAsync(logoDir, specDir, function (...dstFiles: string[]) {
             // Install with kernel spec file
-            let args = [
+            const args = [
                 Arguments.frontend[0],
                 "kernelspec install --replace",
                 specDir,
@@ -511,11 +511,11 @@ class Main {
             }
 
             // Launch installation process using frontend
-            let cmd = args.join(" ");
+            const cmd = args.join(" ");
             exec(cmd, function (error, stdout, stderr) {
                 // Remove temporary spec folder
                 fs.unlinkSync(specFile);
-                for (let file of dstFiles) {
+                for (const file of dstFiles) {
                     fs.unlinkSync(file);
                 }
                 fs.rmdirSync(specDir);
@@ -542,8 +542,8 @@ class Main {
      * Launch frontend script
      */
     static spawnFrontend() {
-        let [cmd, ...args] = Arguments.frontend;
-        let frontend = spawn(cmd, args, {
+        const [cmd, ...args] = Arguments.frontend;
+        const frontend = spawn(cmd, args, {
             stdio: "inherit"
         });
 
@@ -554,7 +554,7 @@ class Main {
     }
 }
 
-/*** Below: Launch codes for ITypescript ***/
+/** * Below: Launch codes for ITypescript ***/
 
 // Check whether DEBUG is set in the environment
 if (process.env["DEBUG"]) {

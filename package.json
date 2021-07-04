@@ -1,6 +1,6 @@
 {
   "name": "@winnekes/itypescript",
-  "version": "0.3.5",
+  "version": "0.4.0",
   "description": "ITypescript is a Typescript kernel for the Jupyter notebook (A Modified version of IJavascript module)",
   "keywords": [
     "typescript",
@@ -8,17 +8,17 @@
     "ipython",
     "jupyter"
   ],
-  "homepage": "https://nearbydelta.github.io/itypescript",
+  "homepage": "https://winnekes.github.io/itypescript",
   "bugs": {
-    "url": "https://github.com/nearbydelta/itypescript/issues"
+    "url": "https://github.com/winnekes/itypescript/issues"
   },
   "license": "BSD-3-Clause",
   "author": {
-    "name": "Bugeun Kim"
+    "name": "Bugeun Kim & Simona Winnekes"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nearbydelta/itypescript.git"
+    "url": "https://github.com/winnekes/itypescript.git"
   },
   "bin": {
     "its": "bin/itypescript.js",
@@ -27,19 +27,23 @@
   "dependencies": {
     "diff": "^4.0.1",
     "jp-kernel": "^2.0.0",
-    "typescript": "^3.9.5",
-    "uuid": "^3.3.2"
+    "typescript": "^4.3.5",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/debug": "^4.1.2",
     "@types/diff": "^4.0.1",
-    "@types/node": "^11.11.3",
-    "@types/uuid": "^3.4.4",
+    "@types/node": "^16.0.0",
+    "@types/uuid": "^8.3.1",
+    "@typescript-eslint/eslint-plugin": "^4.28.1",
+    "@typescript-eslint/eslint-plugin-tslint": "^4.28.1",
+    "@typescript-eslint/parser": "^4.28.1",
     "debug": "latest",
-    "tslint": "latest"
+    "eslint": "^7.30.0"
   },
   "scripts": {
-    "lint": "./node_modules/.bin/tslint bin/*.ts lib/*.ts",
-    "tsc": "npm run lint; ./node_modules/.bin/tsc"
+    "lint": "./node_modules/.bin/eslint bin/*.ts lib/*.ts",
+    "lint:fix": "./node_modules/.bin/eslint bin/*.ts lib/*.ts --fix",
+    "tsc": "./node_modules/.bin/tsc"
   }
 }
