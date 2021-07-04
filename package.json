@@ -1,6 +1,6 @@
 {
   "name": "itypescript",
-  "version": "0.3.5",
+  "version": "0.4.0",
   "description": "ITypescript is a Typescript kernel for the Jupyter notebook (A Modified version of IJavascript module)",
   "keywords": [
     "typescript",
@@ -35,7 +35,10 @@
     "@types/diff": "^4.0.1",
     "@types/node": "^16.0.0",
     "@types/uuid": "^8.3.1",
+    "@typescript-eslint/eslint-plugin": "^4.28.1",
+    "@typescript-eslint/parser": "^4.28.1",
     "debug": "latest",
+    "eslint": "^7.30.0",
     "tslint": "latest"
   },
   "scripts": {
