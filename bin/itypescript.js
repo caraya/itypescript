@@ -44,42 +44,6 @@ const path = require("path");
  * Logger for ITypescript launcher
  */
 class Logger {
-    // Usage string
-    static usage = `Itypescript Notebook
-
-Usage:
-  its <options>
-
-The recognized options are:
-  --help                        show ITypescript & notebook help
-  --install=[local|global]      install ITypescript kernel
-  --ts-debug                    enable debug log level
-  --ts-help                     show ITypescript help
-  --ts-off-es-module-interop    Turn off warning for "esModuleInterop" option.
-  --ts-hide-undefined           do not show undefined results
-  --ts-hide-execution-result    do not show execution results
-  --ts-protocol=version         set protocol version, e.g. 5.1
-  --ts-startup-script=path      run script on startup
-                                (path can be a file or a folder)
-  --ts-working-dir=path         set session working directory
-                                (default = current working directory)
-  --version                     show ITypescript version
-
-and any other options recognized by the Jupyter notebook; run:
-
-  jupyter notebook --help
-
-for a full list.
-
-Disclaimer:
-  ITypescript notebook and its kernel are modified version of IJavascript notebook and its kernels.
-  Copyrights of original codes/algorithms belong to IJavascript developers.
-`;
-    /**
-     * Logging function (Do nothing by default).
-     */
-    static log = () => {
-    };
     /**
      * Set logger function as verbose level.
      */
@@ -133,14 +97,46 @@ Disclaimer:
         Logger.log(Arguments.toString());
     }
 }
+// Usage string
+Logger.usage = `Itypescript Notebook
+
+Usage:
+  its <options>
+
+The recognized options are:
+  --help                        show ITypescript & notebook help
+  --install=[local|global]      install ITypescript kernel
+  --ts-debug                    enable debug log level
+  --ts-help                     show ITypescript help
+  --ts-off-es-module-interop    Turn off warning for "esModuleInterop" option.
+  --ts-hide-undefined           do not show undefined results
+  --ts-hide-execution-result    do not show execution results
+  --ts-protocol=version         set protocol version, e.g. 5.1
+  --ts-startup-script=path      run script on startup
+                                (path can be a file or a folder)
+  --ts-working-dir=path         set session working directory
+                                (default = current working directory)
+  --version                     show ITypescript version
+
+and any other options recognized by the Jupyter notebook; run:
+
+  jupyter notebook --help
+
+for a full list.
+
+Disclaimer:
+  ITypescript notebook and its kernel are modified version of IJavascript notebook and its kernels.
+  Copyrights of original codes/algorithms belong to IJavascript developers.
+`;
+/**
+ * Logging function (Do nothing by default).
+ */
+Logger.log = () => {
+};
 /**
  * Path helper class
  */
 class Path {
-    // Location of node runtime
-    static _node = process.argv[0];
-    // Location of root path of ITypescript
-    static _root = path.dirname(path.dirname(fs.realpathSync(process.argv[1])));
     // Print the status string
     static toString() {
         return `
@@ -166,20 +162,16 @@ class Path {
         return Path.at("images");
     }
 }
+// Location of node runtime
+Path._node = process.argv[0];
+// Location of root path of ITypescript
+Path._root = path.dirname(path.dirname(fs.realpathSync(process.argv[1])));
 /**
  * Handling arguments which will be passed to child processes, such as jupyter(frontend) or kernel(lib/kernel.js).
  * @property {String[]} context.args.kernel   Command arguments to run kernel
  * @property {String[]} context.args.frontend Command arguments to run frontend
  **/
 class Arguments {
-    static _kernel = [
-        Path.node,
-        Path.kernel
-    ];
-    static _frontend = [
-        "jupyter",
-        "notebook",
-    ];
     // Stringify arguments.
     static toString() {
         return `
@@ -207,6 +199,14 @@ class Arguments {
         Arguments._frontend[0] = path;
     }
 }
+Arguments._kernel = [
+    Path.node,
+    Path.kernel
+];
+Arguments._frontend = [
+    "jupyter",
+    "notebook",
+];
 /**
  * Parse version string and retrieve major version number
  * @param ver The version string to be parsed
@@ -223,16 +223,6 @@ function majorVersionOf(ver) {
  * ITypescript Main Class
  */
 class Main {
-    // Version of Jupyter protocol
-    static protocolVersion = null;
-    // Version of frontend (Jupyter/IPython)
-    static frontendVersion = null;
-    // Error object while idenitfying frontend's version
-    static frontIdentificationError = null;
-    // Install location of ITypescript kernel.
-    static installLoc = null;
-    // Parse package JSON of ITypescript project
-    static packageJSON = JSON.parse(fs.readFileSync(Path.at("package.json")).toString());
     /**
      * Prepare arguments
      * @param callback Callback called after parsing arguments
@@ -478,6 +468,16 @@ class Main {
         });
     }
 }
+// Version of Jupyter protocol
+Main.protocolVersion = null;
+// Version of frontend (Jupyter/IPython)
+Main.frontendVersion = null;
+// Error object while idenitfying frontend's version
+Main.frontIdentificationError = null;
+// Install location of ITypescript kernel.
+Main.installLoc = null;
+// Parse package JSON of ITypescript project
+Main.packageJSON = JSON.parse(fs.readFileSync(Path.at("package.json")).toString());
 /** * Below: Launch codes for ITypescript ***/
 // Check whether DEBUG is set in the environment
 if (process.env["DEBUG"]) {
