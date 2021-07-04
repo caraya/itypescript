@@ -42,7 +42,7 @@ import Kernel = require("jp-kernel");
 import diff = require("diff");
 import {sys} from "typescript";
 
-let $TScode = fs.readFileSync(path.join(__dirname, "startup.ts")).toString("UTF-8");
+let $TScode = fs.readFileSync(path.join(__dirname, "startup.ts")).toString("utf-8");
 
 /**
  * A logger class for error/debug messages
