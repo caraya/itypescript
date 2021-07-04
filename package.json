@@ -1,5 +1,5 @@
 {
-  "name": "itypescript",
+  "name": "@winnekes/itypescript",
   "version": "0.3.5",
   "description": "ITypescript is a Typescript kernel for the Jupyter notebook (A Modified version of IJavascript module)",
   "keywords": [

@@ -52,11 +52,11 @@ Also, you have to install `jupyter`. Follow the instruction of
 ### Stand-alone
 After installing these, install ITypescript by typing following shell command (Linux/Unix/Mac):
 ```sh
-sudo -H npm install -g itypescript
+sudo -H npm install -g @winnekes/itypescript
 ```
 For windows, find `node.js prompt`, run it as administrator, and type:
 ```sh
-npm install -g itypescript
+npm install -g @winnekes/itypescript
 ```
 
 ### Jupyter Kernel
