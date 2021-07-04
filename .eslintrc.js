@@ -16,7 +16,7 @@ module.exports = {
         "eslint:recommended",
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended"
-    ]
+    ],
     "rules": {
         "@typescript-eslint/indent": "error",
         "@typescript-eslint/member-delimiter-style": [
@@ -32,7 +32,6 @@ module.exports = {
                 }
             }
         ],
-        "@typescript-eslint/naming-convention": "error",
         "@typescript-eslint/prefer-namespace-keyword": "error",
         "@typescript-eslint/quotes": [
             "error",
