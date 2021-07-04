@@ -496,7 +496,7 @@ class Configuration {
                 },
                 "banner": (
                     "ITypescript v" + itsVersion + "\n" +
-                    "https://github.com/nearbydelta/itypescript\n"
+                    "https://github.com/winnekes/itypescript\n"
                 ),
                 "help_links": [{
                     "text": "TypeScript Doc",
