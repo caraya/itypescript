@@ -1,6 +1,6 @@
 {
-  "name": "itypescript",
-  "version": "0.4.0",
+  "name": "@elrond25/itypescript",
+  "version": "0.1.0",
   "description": "ITypescript is a Typescript kernel for the Jupyter notebook (A Modified version of IJavascript module)",
   "keywords": [
     "typescript",
@@ -8,42 +8,42 @@
     "ipython",
     "jupyter"
   ],
-  "homepage": "https://winnekes.github.io/itypescript",
+  "homepage": "https://github.com/elrond25/itypescript/issues",
   "bugs": {
-    "url": "https://github.com/winnekes/itypescript/issues"
+    "url": "https://github.com/elrond25/itypescript/issues"
   },
   "license": "BSD-3-Clause",
   "author": {
-    "name": "Bugeun Kim & Simona Winnekes"
+    "name": " Carlos Araya"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/winnekes/itypescript.git"
+    "url": "https://github.com/elrond25/itypescript.git"
   },
   "bin": {
     "its": "bin/itypescript.js",
     "itskernel": "lib/kernel.js"
   },
   "dependencies": {
-    "diff": "^4.0.1",
+    "diff": "^7.0.0",
     "jp-kernel": "^2.0.0",
-    "typescript": "^4.3.5",
-    "uuid": "^8.3.2"
-  },
-  "devDependencies": {
-    "@types/debug": "^4.1.2",
-    "@types/diff": "^4.0.1",
-    "@types/node": "^16.0.0",
-    "@types/uuid": "^8.3.1",
-    "@typescript-eslint/eslint-plugin": "^4.28.1",
-    "@typescript-eslint/eslint-plugin-tslint": "^4.28.1",
-    "@typescript-eslint/parser": "^4.28.1",
-    "debug": "latest",
-    "eslint": "^7.30.0"
+    "typescript": "^5.8.3",
+    "uuid": "^11.1.0"
   },
   "scripts": {
-    "lint": "./node_modules/.bin/eslint bin/*.ts lib/*.ts",
-    "lint:fix": "./node_modules/.bin/eslint bin/*.ts lib/*.ts --fix",
-    "tsc": "./node_modules/.bin/tsc"
+    "build": "npx tsc",
+    "lint": "npx eslint .",
+    "lint:fix": "npx eslint --fix -- ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.26.0",
+    "@types/debug": "^4.1.12",
+    "@types/diff": "^7.0.2",
+    "@types/node": "^22.15.17",
+    "@types/uuid": "^10.0.0",
+    "debug": "^4.4.0",
+    "eslint": "^9.26.0",
+    "globals": "^16.1.0",
+    "typescript-eslint": "^8.32.0"
   }
 }

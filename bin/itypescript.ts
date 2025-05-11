@@ -255,7 +255,7 @@ class Main {
     // Version of frontend (Jupyter/IPython)
     static frontendVersion: string | null = null;
     // Error object while idenitfying frontend's version
-    static frontIdentificationError: Object | null = null;
+    static frontIdentificationError: object | null = null;
     // Install location of ITypescript kernel.
     static installLoc: string | null = null;
 

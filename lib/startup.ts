@@ -1,4 +1,4 @@
-declare var $$;
+declare let $$;
 
 class $TS {
     static done() {
@@ -14,7 +14,7 @@ class $TS {
     }
 
     static put(mimeType: string, obj: string) {
-        let result = {};
+        const result = {};
         result[mimeType] = obj;
         $$.mime(result);
     }
@@ -32,7 +32,7 @@ class $TS {
     }
 
     static pngFile(path: string) {
-        let base64 = require("fs").readFileSync(path).toString("base64");
+        const base64 = require("fs").readFileSync(path).toString("base64");
         $TS.png(base64);
     }
 
@@ -41,7 +41,7 @@ class $TS {
     }
 
     static jpgFile(path: string) {
-        let base64 = require("fs").readFileSync(path).toString("base64");
+        const base64 = require("fs").readFileSync(path).toString("base64");
         $TS.jpg(base64);
     }
 

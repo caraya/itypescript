@@ -113,7 +113,7 @@ Options:
  */
 interface KernelConfig {
     // Frontend connection file
-    connection?: Object;
+    connection?: object;
 
     // Session current working directory
     cwd: string;
@@ -128,7 +128,7 @@ interface KernelConfig {
     hideUndefined: boolean;
 
     // Content of kernel_info_reply message
-    kernelInfoReply: Object;
+    kernelInfoReply: object;
 
     // Message protocol version
     protocolVersion: string;
@@ -176,10 +176,10 @@ class Configuration {
     private isConnSet = false;
 
     // The object handles Jupyter connection
-    private conn: Object = {};
+    private conn: object = {};
 
     // The response which will be sent to Jupyter
-    private response: Object;
+    private response: object;
 
     // The startup script
     private _startupScript: string;

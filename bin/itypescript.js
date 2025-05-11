@@ -311,7 +311,7 @@ class Main {
      * @param callback
      */
     static setJupyterInfoAsync(callback) {
-        child_process_1.exec("jupyter notebook --version", function (error, stdout) {
+        (0, child_process_1.exec)("jupyter notebook --version", function (error, stdout) {
             if (error) {
                 // If error, try with IPython notebook
                 Main.frontIdentificationError = error;
@@ -329,7 +329,7 @@ class Main {
      * @param callback
      */
     static setIPythonInfoAsync(callback) {
-        child_process_1.exec("ipython --version", function (error, stdout) {
+        (0, child_process_1.exec)("ipython --version", function (error, stdout) {
             if (error) {
                 if (Main.frontIdentificationError) {
                     console.error("Error running `jupyter --version`");
@@ -437,7 +437,7 @@ class Main {
             }
             // Launch installation process using frontend
             const cmd = args.join(" ");
-            child_process_1.exec(cmd, function (error, stdout, stderr) {
+            (0, child_process_1.exec)(cmd, function (error, stdout, stderr) {
                 // Remove temporary spec folder
                 fs.unlinkSync(specFile);
                 for (const file of dstFiles) {
@@ -459,7 +459,7 @@ class Main {
      */
     static spawnFrontend() {
         const [cmd, ...args] = Arguments.frontend;
-        const frontend = child_process_1.spawn(cmd, args, {
+        const frontend = (0, child_process_1.spawn)(cmd, args, {
             stdio: "inherit"
         });
         // Relay SIGINT onto the frontend
